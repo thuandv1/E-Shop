@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
-
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const input = [1, 2, 3, 4, 5, 6]
+    let output = []
+    let hehe = []
+    for (let i = 0; i <= input.length; i++) {
+        if (i % 2 == 0) {
+            hehe = []
+            hehe.push(input[i])
+            console.log(hehe)
+        } else {
+            hehe.push(input[i])
+            console.log(hehe)
+            output.push(hehe)
+        }
+        // if (i == input.length) break
+    }
+    console.log(output)
+    return output
 }
 
-export default App;
+export default App
