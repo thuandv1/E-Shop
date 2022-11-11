@@ -1,21 +1,37 @@
+import DefaultLayout from 'layouts/DefaultLayout'
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+import { publicRoutes } from 'routes'
+
 function App() {
-    const input = [1, 2, 3, 4, 5, 6]
-    let output = []
-    let hehe = []
-    for (let i = 0; i <= input.length; i++) {
-        if (i % 2 == 0) {
-            hehe = []
-            hehe.push(input[i])
-            console.log(hehe)
-        } else {
-            hehe.push(input[i])
-            console.log(hehe)
-            output.push(hehe)
-        }
-        // if (i == input.length) break
-    }
-    console.log(output)
-    return output
+    return (
+        <Router>
+            <div className="App">
+                <Routes>
+                    {publicRoutes.map((route, index) => {
+                        console.log(route)
+                        const Page = route.component
+                        let Layout = DefaultLayout
+
+                        if (route.layout) {
+                            Layout = route.layout
+                        }
+
+                        return (
+                            <Route
+                                key={index}
+                                path={route.path}
+                                element={
+                                    <Layout>
+                                        <Page />
+                                    </Layout>
+                                }
+                            />
+                        )
+                    })}
+                </Routes>
+            </div>
+        </Router>
+    )
 }
 
 export default App
