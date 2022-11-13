@@ -1,0 +1,25 @@
+.product {
+    text-align: center;
+
+    & .product__title {
+        font-size: 4.6rem;
+        line-height: 5.4rem;
+        color: #222;
+        font-weight: 700;
+    }
+
+    & p {
+        font-size: 1.7rem;
+        color: #465b52;
+        margin: 1.5rem 0 2rem 0;
+    }
+
+    & .product__container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        align-items: center;
+        padding-top: 20px;
+    }
+}

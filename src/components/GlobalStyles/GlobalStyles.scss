@@ -1,0 +1,174 @@
+@import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@100;200;300;400;500;600;700;800;900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+:root {
+    --primary-color: #088178;
+    --text-color: #222;
+    --while-color: #fff;
+    --backgr-color: #e3e6f3;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+    font-family: "Spartan", sans-serif;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    color: var(--text-color);
+    font-size: 1.4rem;
+    line-height: 1.8rem;
+    font-weight: 400;
+
+    & h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 0;
+        padding: 0;
+
+        margin-bottom: 0;
+        margin-top: 0;
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+.App {
+    position: relative;
+}
+
+button,
+input,
+[tabindex] {
+    outline: none;
+    border: none;
+}
+
+button.normal {
+    font-size: 1.6rem;
+    font-weight: 600;
+    padding: 15px 30px;
+    color: #000;
+    background-color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: 0.2s;
+}
+
+button.normal:hover {
+    opacity: 0.9;
+    box-shadow: 20px 10px 54px rgba(0, 0, 0, 0.1);
+}
+
+button.while {
+    font-size: 1.4rem;
+    font-weight: 600;
+    padding: 11px 18px;
+    color: #fff;
+    background: transparent;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: 0.2s;
+    border: 1px solid #fff;
+}
+
+a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+h1 {
+    font-size: 5rem;
+    line-height: 6.4rem;
+}
+
+h2 {
+    font-size: 4.6rem;
+    line-height: 5.4rem;
+}
+
+h4 {
+    font-size: 2.2rem;
+}
+
+h6 {
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+p {
+    font-size: 1.4rem;
+    color: #465b52;
+    // margin: 1.5rem 0 2rem 0;
+}
+
+span {
+    font-size: 1.4rem;
+    // margin: 1.5rem 0 2rem 0;
+}
+
+.div-p1 {
+    padding: 4rem 8rem;
+}
+
+.div-m1 {
+    margin: 4rem 0;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.row {
+    width: 100%;
+}
+
+.col-2-5 {
+    width: 21%;
+    min-width: 250px;
+    padding: 10px 12px;
+}
+
+//Custom antd
+span.ant-select-selection-item {
+    margin: 0;
+}
+
+//custom antd modal
+div.ant-modal-title {
+    text-align: center;
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+div.ant-modal-content {
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    overflow: hidden;
+}
+
+div.ant-modal-body {
+    padding: 0;
+}
+
+//Custom toastTify
+.Toastify__toast-container {
+    position: absolute;
+    z-index: 100000;
+}
