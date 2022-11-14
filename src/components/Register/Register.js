@@ -1,21 +1,20 @@
-import { Modal, Select } from 'antd'
-import classNames from 'classnames/bind'
-
 import { faClose, faLock, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import images from 'assets/images'
-import { useEffect, useState } from 'react'
+import { Modal, Select } from 'antd'
+import classNames from 'classnames/bind'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import styles from './RegisterModal.module.scss'
 
+import images from 'assets/images'
+import styles from './Register.module.scss'
 import * as fetchApi from 'utils/api'
 
 const cx = classNames.bind(styles)
 
-function RegisterModal() {
-    const [open, setOpen] = useState(false)
+function Register() {
+    const [openModalReg, setOpenModalReg] = useState(false)
     const [dataUser, setDataUser] = useState({ level: 0, country: 3 })
 
     const {
@@ -91,7 +90,7 @@ function RegisterModal() {
             <a
                 className={cx('form__signup')}
                 onClick={() => {
-                    setOpen(true)
+                    setOpenModalReg(true)
                 }}
             >
                 SIGN UP
@@ -100,8 +99,8 @@ function RegisterModal() {
                 title=""
                 centered
                 closeIcon={<FontAwesomeIcon className={cx('close-icon')} icon={faClose} />}
-                open={open}
-                onCancel={() => setOpen(false)}
+                open={openModalReg}
+                onCancel={() => setOpenModalReg(false)}
                 width={'65vw'}
                 footer={''}
             >
@@ -274,7 +273,7 @@ function RegisterModal() {
                             <a
                                 className={cx('form__signup')}
                                 onClick={() => {
-                                    setOpen(false)
+                                    setOpenModalReg(false)
                                 }}
                             >
                                 SIGN IN
@@ -287,4 +286,4 @@ function RegisterModal() {
     )
 }
 
-export default RegisterModal
+export default Register

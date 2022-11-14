@@ -145,6 +145,19 @@ span {
     padding: 10px 12px;
 }
 
+div.product {
+    text-align: center;
+
+    & div.product__container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        align-items: center;
+        padding-top: 20px;
+    }
+}
+
 //Custom antd
 span.ant-select-selection-item {
     margin: 0;

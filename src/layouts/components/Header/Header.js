@@ -1,14 +1,13 @@
-import classNames from 'classnames/bind'
-import { useContext, useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import { Modal } from 'antd'
-import { faBagShopping, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faBagShopping } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import classNames from 'classnames/bind'
+import { useContext } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 
 import images from 'assets/images'
-import styles from './Header.module.scss'
-import LoginModal from 'components/LoginModal'
+import LoginModal from 'components/Login'
 import { LoginContext } from 'Context/LoginContext'
+import styles from './Header.module.scss'
 
 const cx = classNames.bind(styles)
 

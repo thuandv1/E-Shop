@@ -1,0 +1,16 @@
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    background: top 25% right 0 / cover no-repeat;
+    height: 40vh;
+    width: 100%;
+    padding: 0 9rem;
+
+    & h2,
+    & p {
+        color: #fff;
+    }
+}

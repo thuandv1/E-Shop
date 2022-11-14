@@ -3,7 +3,7 @@ import classNames from 'classnames/bind'
 import styles from './ProductItem.module.scss'
 
 const cx = classNames.bind(styles)
-function Product() {
+function Product({ dataProduct }) {
     return (
         <div className={cx('product__item', 'col-2-5')}>
             <img className={cx('product__item-img')} src={images.product1} alt="" />

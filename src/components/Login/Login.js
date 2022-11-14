@@ -1,26 +1,24 @@
-import { useContext, useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import classNames from 'classnames/bind'
-import { Modal } from 'antd'
+import { faArrowRightToBracket, faBookmark, faClose, faLock, faPen, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRightToBracket, faBarcode, faBookBookmark, faBookmark, faClose, faLock, faPen, faUser } from '@fortawesome/free-solid-svg-icons'
 import Tippy from '@tippyjs/react/headless'
+import { Modal } from 'antd'
+import classNames from 'classnames/bind'
+import { useContext, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { toast, ToastContainer } from 'react-toastify'
+import 'antd/dist/antd.css'
 
 import images from 'assets/images'
-import styles from './LoginModal.module.scss'
-import RegisterModal from 'components/RegisterModal'
-import * as fetchApi from 'utils/api'
+import RegisterModal from 'components/Register'
 import { LoginContext } from 'Context/LoginContext'
-import { toast, ToastContainer } from 'react-toastify'
 import { Link } from 'react-router-dom'
+import styles from './Login.module.scss'
 
 const cx = classNames.bind(styles)
 
-function LoginModal() {
+function Login() {
     const [openLogin, setOpenLogin] = useState(false)
     const { postLogin, userLogin, handleLogout } = useContext(LoginContext)
-
-    console.log(userLogin)
 
     const {
         register,
@@ -183,4 +181,4 @@ function LoginModal() {
     )
 }
 
-export default LoginModal
+export default Login

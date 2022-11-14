@@ -19,7 +19,13 @@ const images = {
     bannerSignUp: require('./banner/b14.png'),
     payImg: require('./pay/pay.png'),
     appStoreImg: require('./pay/app.jpg'),
-    playStoreImg: require('./pay/play.jpg')
+    playStoreImg: require('./pay/play.jpg'),
+    bannerShop: require('./banner/b1.jpg'),
+    bannerBlog: require('./banner/b19.jpg'),
+    bannerAbout: require('./about/banner.png'),
+    blog1: require('./blog/b1.jpg'),
+    aboutDescImg: require('./about/a6.jpg'),
+    dowloadVideo: require('./about/1.mp4')
 }
 
 export default images

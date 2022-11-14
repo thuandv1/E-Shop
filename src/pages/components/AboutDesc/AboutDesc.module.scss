@@ -1,0 +1,19 @@
+.about-head {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & img {
+        width: 50%;
+        height: auto;
+    }
+
+    & .about-head__desc {
+        padding-left: 40px;
+
+        & abbr,
+        & marquee {
+            font-size: 1.4rem;
+        }
+    }
+}
