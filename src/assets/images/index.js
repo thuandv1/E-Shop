@@ -23,9 +23,14 @@ const images = {
     bannerShop: require('./banner/b1.jpg'),
     bannerBlog: require('./banner/b19.jpg'),
     bannerAbout: require('./about/banner.png'),
+    bannerCart: require('./banner/banner3.png'),
+    bannerContact: require('./banner/banner4.png'),
     blog1: require('./blog/b1.jpg'),
     aboutDescImg: require('./about/a6.jpg'),
-    dowloadVideo: require('./about/1.mp4')
+    dowloadVideo: require('./about/1.mp4'),
+    member1: require('./people/1.png'),
+    member2: require('./people/2.png'),
+    member3: require('./people/3.png')
 }
 
 export default images

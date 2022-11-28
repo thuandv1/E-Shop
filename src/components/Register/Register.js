@@ -2,9 +2,9 @@ import { faClose, faLock, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Modal, Select } from 'antd'
 import classNames from 'classnames/bind'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { toast, ToastContainer } from 'react-toastify'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 import images from 'assets/images'
@@ -13,8 +13,8 @@ import * as fetchApi from 'utils/api'
 
 const cx = classNames.bind(styles)
 
-function Register() {
-    const [openModalReg, setOpenModalReg] = useState(false)
+function Register({ onRegisterClick }) {
+    const [openModalReg, setOpenModalReg] = useState(true)
     const [dataUser, setDataUser] = useState({ level: 0, country: 3 })
 
     const {
@@ -30,18 +30,20 @@ function Register() {
 
     const { onChange, onBlur, name, ref } = register()
 
-    const onSubmit = (data) => {
+    const onSubmitRegister = (dataReg) => {
         if (!dataUser.avatar) {
             setError('avatar', { message: 'Please choses avatar' })
         } else {
-            fetchApi.post('register', { ...data, ...dataUser }).then((res) => {
+            fetchApi.post('register', { ...dataReg, ...dataUser }).then((res) => {
+                console.log(res)
+                console.log(dataReg)
                 if (res?.errors?.email) {
                     setError('email', {
                         message: 'Email already exists'
                     })
                 }
-
                 if (res?.message === 'success') {
+                    setOpenModalReg(false)
                     toast.success('Đăng ký tài khoản thành công!', {
                         position: 'top-center',
                         theme: 'dark'
@@ -85,16 +87,12 @@ function Register() {
         }
     }
 
+    useEffect(() => {
+        onRegisterClick(openModalReg)
+    }, [openModalReg])
+
     return (
         <>
-            <a
-                className={cx('form__signup')}
-                onClick={() => {
-                    setOpenModalReg(true)
-                }}
-            >
-                SIGN UP
-            </a>
             <Modal
                 title=""
                 centered
@@ -104,11 +102,9 @@ function Register() {
                 width={'65vw'}
                 footer={''}
             >
-                <ToastContainer progressClassName="toastProgress" bodyClassName="toastBody" />
-
                 <div style={{ backgroundImage: `url(${images.loginBgr})` }} className={cx('container')}>
                     <div className={cx('form')}>
-                        <form action="" onSubmit={handleSubmit(onSubmit)}>
+                        <form key={2} action="" onSubmit={handleSubmit(onSubmitRegister)}>
                             <h1>Register</h1>
                             <div className={cx('form-action')}>
                                 <label htmlFor="register-name">Full Name</label>

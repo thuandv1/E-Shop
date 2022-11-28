@@ -1,45 +1,3 @@
-.login {
-    color: #1a1a1a;
-    font-size: 1.6rem;
-    font-weight: 600;
-    line-height: 2.6rem;
-    text-decoration: none;
-    padding: 0.6rem 2.2rem;
-    transition: 0.2s linear;
-}
-
-.close-icon {
-    margin: 20px 20px 0 0;
-    color: var(--while-color);
-    font-size: 2.6rem;
-}
-
-.account-menu {
-    background-color: #e3e6f3;
-    padding: 10px 0;
-    border-radius: 10px;
-    box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.12);
-
-    .account-item {
-        min-width: 130px;
-        display: block;
-        color: var(--text-color);
-        font-size: 1.8rem;
-        font-weight: 600;
-        padding: 10px 15px;
-
-        &:hover {
-            background-color: #16182308;
-            color: var(--primary-color);
-        }
-
-        & .icon {
-            font-size: 1.4rem;
-            margin-right: 10px;
-        }
-    }
-}
-
 .container {
     padding: 20px 0;
     width: 100%;
@@ -47,31 +5,37 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: no-repeat center center / cover;
+    background: var(--primary-color) 20% 30% no-repeat;
 
     & .form {
         width: 435px;
         max-width: 90%;
         background-color: #fff;
         border-radius: 10px;
-        padding: 22px 42px;
+        padding: 12px 34px;
+        border: 1px solid #ccc;
 
         & form {
             & h1 {
-                font-size: 3.6rem;
+                font-size: 3.2rem;
+                font-weight: bold;
+                text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
+                color: var(--primary-color);
                 text-align: center;
-                margin-bottom: 12px;
+                line-height: 3rem;
+                margin-bottom: 22px;
             }
 
             & label {
                 font-size: 1.6rem;
                 font-weight: 400;
                 color: #666;
+                display: block;
             }
 
             & input {
                 width: 100%;
-                padding: 6px 22px 6px 42px;
+                padding: 2px 22px 2px 42px;
 
                 border: none;
                 outline: none;
@@ -80,16 +44,17 @@
 
             & .form-action {
                 position: relative;
-                margin: 22px 0;
+                margin: 8px 0 10px 0;
 
                 & small {
                     position: absolute;
                     font-size: 1.3rem;
                     color: red;
-                    top: 105%;
+                    margin-left: 6px;
+                    top: 96%;
                 }
 
-                & div {
+                & .div-border {
                     position: relative;
                     left: 0;
                     top: 0;
@@ -102,8 +67,12 @@
                         color: #ccc;
                         bottom: 0;
                         left: 0;
-                        padding: 11px 8px;
+                        padding: 8px 8px;
                         transition: 0.3s;
+
+                        &.icon-country {
+                            padding: 7px 8px;
+                        }
                     }
 
                     & span::after {
@@ -134,6 +103,17 @@
                 &.error span i {
                     color: red;
                 }
+
+                &.form-action-avatar .div-border,
+                &.form-action-country .div-border,
+                &.form-action-category .div-border,
+                &.form-action-brand .div-border {
+                    border-bottom: unset;
+                }
+
+                &.form-action-country label {
+                    margin-bottom: 10px;
+                }
             }
 
             & .form__forgot {
@@ -152,18 +132,20 @@
                 border-radius: 30px;
                 outline: none;
                 border: none;
-                background: linear-gradient(to right, #00dade, #f704fe);
+                background: linear-gradient(to left, #00dade, #f704fe);
                 font-size: 1.8rem;
-                padding: 10px 0;
+                padding: 5px 0;
                 color: #fff;
                 cursor: pointer;
                 margin: 0 0 12px 0;
                 transition: all 0.3s;
-                font-weight: 600;
+                font-weight: bold;
 
                 &:hover {
                     opacity: 0.8;
-                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+                    box-shadow: 0 5px 3px rgba(0, 0, 0, 0.2);
+
+                    background: linear-gradient(left to right, #00dade, #f704fe);
                 }
             }
 
@@ -181,10 +163,6 @@
                 & .form-other__fb {
                     background-color: #3b5998;
                     padding: 11px 19px 9px 16px;
-                }
-
-                & a:hover {
-                    opacity: 0.8;
                 }
 
                 & .form-other__gg {
@@ -217,16 +195,6 @@
                         padding-left: 4px;
                     }
                 }
-            }
-
-            & .form__signup {
-                text-decoration: underline;
-                color: unset;
-                text-align: center;
-                font-size: 1.8rem;
-                display: block;
-                font-weight: 500;
-                margin-top: 16px;
             }
         }
     }

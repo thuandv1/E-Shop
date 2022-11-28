@@ -1,0 +1,62 @@
+.form-details {
+    display: flex;
+    justify-content: space-between;
+    margin: 30px;
+    padding: 80px;
+    border: 1px solid #e1e1e1;
+
+    & form {
+        width: 65%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        & input,
+        & textarea {
+            width: 100%;
+            padding: 12px 15px;
+            outline: none;
+            margin-bottom: 20px;
+            border: 1px solid #e1e1e1;
+        }
+
+        & button {
+            background-color: #088178;
+            color: #fff;
+        }
+
+        & h2 {
+            font-size: 2.6rem;
+            line-height: 3.6rem;
+            padding: 20px 0;
+        }
+    }
+
+    & .member div {
+        padding-bottom: 25px;
+        display: flex;
+        align-items: flex-start;
+
+        & img {
+            width: 65px;
+            height: 65px;
+            object-fit: cover;
+            object-position: center;
+            margin-right: 15px;
+        }
+
+        & p {
+            margin: 0;
+            font-size: 1.5rem;
+            line-height: 2.5rem;
+        }
+
+        & span {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #000;
+            margin: 0 0 5px 0;
+        }
+    }
+}

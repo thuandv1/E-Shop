@@ -1,38 +1,40 @@
-import { faArrowRightToBracket, faBookmark, faClose, faLock, faPen, faUser } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Tippy from '@tippyjs/react/headless'
-import { Modal } from 'antd'
-import classNames from 'classnames/bind'
 import { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { toast, ToastContainer } from 'react-toastify'
+import { Link } from 'react-router-dom'
+import Tippy from '@tippyjs/react/headless'
+import { Modal } from 'antd'
 import 'antd/dist/antd.css'
+import { toast, ToastContainer } from 'react-toastify'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRightToBracket, faBookmark, faClose, faLock, faPen, faUser } from '@fortawesome/free-solid-svg-icons'
 
 import images from 'assets/images'
-import RegisterModal from 'components/Register'
-import { LoginContext } from 'Context/LoginContext'
-import { Link } from 'react-router-dom'
+import classNames from 'classnames/bind'
 import styles from './Login.module.scss'
+import Register from 'components/Register'
+import { LoginContext } from 'Context/LoginContext'
 
 const cx = classNames.bind(styles)
 
 function Login() {
     const [openLogin, setOpenLogin] = useState(false)
+    const [openRegister, setOpenRegister] = useState(false)
     const { postLogin, userLogin, handleLogout } = useContext(LoginContext)
 
     const {
-        register,
-        handleSubmit,
-        setError,
-        formState: { errors }
+        register: registerLogin,
+        handleSubmit: handleSubmitLogin,
+        setError: setErrorLogin,
+        formState: { errors: errorsLogin }
     } = useForm({
         mode: 'onBlur',
         reValidateMode: 'onBlur'
     })
 
-    const { onChange, onBlur, name, ref } = register()
+    const { onChange, onBlur, name, ref } = registerLogin()
 
     const onSubmit = async (data) => {
+        console.log('Login')
         if (data) {
             const resData = await postLogin(data)
             if (resData.response === 'success') {
@@ -42,25 +44,38 @@ function Login() {
                 })
                 setOpenLogin(false)
             } else {
-                setError('email', { message: 'Invalid email or password' })
+                setErrorLogin('email', { message: 'Invalid email or password' })
             }
+        }
+    }
+
+    const handleShowLogin = (statusModalReg = false) => {
+        if (statusModalReg === false) {
+            setOpenLogin(true)
+            setOpenRegister(false)
+        } else {
+            setOpenLogin(false)
+            setOpenRegister(true)
         }
     }
 
     return (
         <>
-            <ToastContainer progressClassName="toastProgress" bodyClassName="toastBody" />
             {userLogin.token ? (
                 <Tippy
                     placement="top"
                     interactive
                     render={(attrs) => (
                         <div className={cx('account-menu')} tabIndex={'-1'} {...attrs}>
-                            <Link className={cx('account-item')}>
+                            <Link to={'/account'} className={cx('account-item')}>
                                 <FontAwesomeIcon className={cx('icon')} icon={faPen} />
-                                <span>My product</span>
+                                <span>My Account</span>
                             </Link>
-                            <Link className={cx('account-item')}>
+                            <Link to={'/create-product'} className={cx('account-item')}>
+                                <FontAwesomeIcon className={cx('icon')} icon={faBookmark} />
+                                <span>Add Product</span>
+                            </Link>
+                            <Link to={'/my-product'} className={cx('account-item')}>
                                 <FontAwesomeIcon className={cx('icon')} icon={faBookmark} />
                                 <span>My Product</span>
                             </Link>
@@ -99,7 +114,7 @@ function Login() {
                 >
                     <div style={{ backgroundImage: `url(${images.loginBgr})` }} className={cx('container')}>
                         <div className={cx('form')}>
-                            <form action="" onSubmit={handleSubmit(onSubmit)}>
+                            <form key={1} action="" onSubmit={handleSubmitLogin(onSubmit)}>
                                 <h1>Login</h1>
                                 <div className={cx('form-action')}>
                                     <label htmlFor="login-email">Email</label>
@@ -109,7 +124,7 @@ function Login() {
                                             onBlur={onBlur}
                                             name={name}
                                             ref={ref}
-                                            {...register('email', {
+                                            {...registerLogin('email', {
                                                 required: 'Please enter email',
                                                 pattern: {
                                                     value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
@@ -124,7 +139,7 @@ function Login() {
                                             <FontAwesomeIcon className={cx('icon')} icon={faUser} />
                                         </span>
                                     </div>
-                                    {errors.email && <small>{errors.email.message}</small>}
+                                    {errorsLogin.email && <small>{errorsLogin.email.message}</small>}
                                 </div>
                                 <div className={cx('form-action')}>
                                     <label htmlFor="login-password">Password</label>
@@ -134,7 +149,7 @@ function Login() {
                                             onBlur={onBlur}
                                             name={name}
                                             ref={ref}
-                                            {...register('password', {
+                                            {...registerLogin('password', {
                                                 required: 'Please enter Password',
                                                 pattern: {
                                                     value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
@@ -149,7 +164,7 @@ function Login() {
                                             <FontAwesomeIcon className={cx('icon')} icon={faLock} />
                                         </span>
                                     </div>
-                                    {errors.password && <small>{errors.password.message}</small>}
+                                    {errorsLogin.password && <small>{errorsLogin.password.message}</small>}
                                 </div>
                                 <div className={cx('form__forgot')}>
                                     <a>Forgot password?</a>
@@ -171,12 +186,16 @@ function Login() {
                                 </div>
                                 <h4>Or Sign Up Using</h4>
 
-                                <RegisterModal />
+                                <a className={cx('form__signup')} onClick={handleShowLogin}>
+                                    SIGN UP
+                                </a>
                             </form>
                         </div>
                     </div>
                 </Modal>
             )}
+
+            {openRegister && <Register onRegisterClick={handleShowLogin} />}
         </>
     )
 }

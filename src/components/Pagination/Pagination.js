@@ -8,7 +8,7 @@ function Pagination({ page = 2 }) {
             <a className={cx('active')}>1</a>
             <a>2</a>
             <a>
-                <i class="fa-solid fa-angle-right"></i>
+                <i className="fa-solid fa-angle-right"></i>
             </a>
         </div>
     )

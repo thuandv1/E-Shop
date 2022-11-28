@@ -2,11 +2,13 @@ const routes = {
     home: '/',
     shop: '/shop',
     blog: '/blog',
+    blogdetail: '/blog/detail/:id',
     about: '/about',
     contact: '/contact',
     cart: '/cart',
-
-    blogdetail: '/blog/detail:id'
+    account: '/account',
+    addproduct: '/create-product',
+    myproduct: '/my-product'
 }
 
 export default routes

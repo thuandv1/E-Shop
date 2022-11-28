@@ -10,6 +10,9 @@ import Blog from 'pages/Blog'
 import Cart from 'pages/Cart'
 import About from 'pages/About'
 import Contact from 'pages/Contact'
+import BlogDetail from 'pages/BlogDetail'
+import MyAccount from 'pages/MyAccount'
+import CreateProduct from 'pages/CreateProduct'
 
 //Public routes
 const publicRoutes = [
@@ -27,6 +30,10 @@ const publicRoutes = [
         component: Blog
     },
     {
+        path: config.routes.blogdetail,
+        component: BlogDetail
+    },
+    {
         path: config.routes.about,
         component: About
     },
@@ -37,6 +44,18 @@ const publicRoutes = [
     {
         path: config.routes.cart,
         component: Cart
+    },
+    {
+        path: config.routes.account,
+        component: MyAccount
+    },
+    {
+        path: config.routes.addproduct,
+        component: CreateProduct
+    },
+    {
+        path: config.routes.myproduct,
+        component: MyAccount
     }
 ]
 
