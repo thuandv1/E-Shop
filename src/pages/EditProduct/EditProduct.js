@@ -7,13 +7,20 @@ import classNames from 'classnames/bind'
 import { LoginContext } from 'Context/LoginContext'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import api, * as fetchAPI from 'utils/api'
-import styles from './CreateProduct.module.scss'
+import styles from './EditProduct.module.scss'
 
 const cx = classNames.bind(styles)
 
-function CreateProduct() {
+function EditProduct() {
+    //get id product
+    const params = useParams()
+    const imgInputRef = useRef()
+
+    const { userLogin } = useContext(LoginContext)
+
     //Reacthook Form
     const {
         register,
@@ -29,11 +36,24 @@ function CreateProduct() {
     const { onChange, onBlur, name, ref } = register()
     //end
 
-    const { userLogin } = useContext(LoginContext)
-    console.log(userLogin)
+    let config = {
+        headers: {
+            Authorization: 'Bearer ' + userLogin.token,
+            'Content-Type': 'application/x-www-form-urlencoded',
+            Accept: 'application/json'
+        }
+    }
 
+    const [product, setProduct] = useState({})
+    const [imgProduct, setImgProduct] = useState([])
     const [category, setCategory] = useState([])
     const [brand, setBrand] = useState([])
+    const [imgCheckBox, setImgCheckBox] = useState([])
+    const [selectLabel, setSelectLabel] = useState({
+        categoryLabel: 'Select Category',
+        brandLabel: 'Select Brand',
+        statusLabel: 'Select Status'
+    })
     const saleElRef = useRef()
 
     useEffect(() => {
@@ -42,6 +62,48 @@ function CreateProduct() {
             setBrand(res.brand)
         })
     }, [])
+
+    //get profile product
+    useEffect(() => {
+        Object.keys(userLogin).length > 0 &&
+            fetchAPI.get(`user/product/${params.id}`, config).then((res) => {
+                console.log(res)
+                if (res.response === 'success') {
+                    setProduct(res.data)
+                    setImgProduct(res.data.image)
+                    setValue('name', res.data.name)
+                    setValue('price', res.data.price)
+                    setValue('brand', res.data.id_brand)
+                    setValue('category', res.data.id_category)
+                    setValue('company', res.data.company_profile)
+                    setValue('status', res.data.status)
+                    setValue('sale', res.data.sale)
+                    setValue('detail', res.data.detail)
+
+                    if (getValues('status') == 2) {
+                        saleElRef.current.style.display = 'block'
+                    }
+                }
+            })
+    }, [userLogin])
+
+    // useEffect(() => {
+    //     category.map((item) => {
+    //         if (item.id == product.id_category) {
+    //             setSelectLabel((prev) => ({ ...prev, categoryLabel: item.category }))
+    //         }
+    //     })
+
+    //     brand.map((item) => {
+    //         if (item.id == product.id_brand) {
+    //             setSelectLabel((prev) => ({ ...prev, brandLabel: item.brand }))
+    //         }
+    //     })
+
+    //     product?.status === 1
+    //         ? setSelectLabel((prev) => ({ ...prev, statusLabel: 'New' }))
+    //         : setSelectLabel((prev) => ({ ...prev, statusLabel: 'Sale' }))
+    // }, [product])
 
     //handle get value select option input
     const handleChangeSelectBrand = (value) => {
@@ -94,21 +156,48 @@ function CreateProduct() {
                     } else {
                         setValue('image', files)
                         clearErrors('image')
+                        handleCheckLengthImgSubmit()
                     }
                 }
             }
         }
     }
 
-    let config = {
-        headers: {
-            Authorization: 'Bearer ' + userLogin.token,
-            'Content-Type': 'application/x-www-form-urlencoded',
-            Accept: 'application/json'
+    const handleCheckImg = (ev) => {
+        const checked = ev.target.checked
+        const value = ev.target.value
+
+        if (checked) {
+            setImgCheckBox((prev) => [...prev, value])
+        } else {
+            setImgCheckBox((prev) => prev.filter((item) => item !== value))
         }
+        clearErrors('image')
+    }
+
+    const handleCheckLengthImgSubmit = () => {
+        let flag = false
+        const lengthImgData = imgProduct.length || 0
+        const lengthImgUpload = getValues('image')?.length || 0
+        const lengthImgDelete = imgCheckBox.length || 0
+
+        const lengthTotalImg = +lengthImgData + +lengthImgUpload - +lengthImgDelete
+
+        if (lengthTotalImg <= 5) {
+            clearErrors('image')
+            flag = true
+        } else {
+            setError('image', {
+                message: 'Maxium 5 files, Please choose files to delete'
+            })
+            flag = false
+        }
+
+        return flag
     }
 
     const onSubmitAddProduct = (data) => {
+        console.log(data)
         !data.brand &&
             setError('brand', {
                 message: 'Please select brand'
@@ -129,8 +218,9 @@ function CreateProduct() {
                 message: 'Please select image'
             })
 
-        if (data && data.brand && data.category && data.status && data.image) {
+        if (data && data.brand && data.category && data.status && data.image && handleCheckLengthImgSubmit()) {
             const formData = new FormData()
+            imgCheckBox.map((item) => formData.append('avatarCheckBox[]', item))
 
             Object.keys(data).map((key, el) => {
                 if (key !== 'image') {
@@ -144,10 +234,10 @@ function CreateProduct() {
                 }
             })
 
-            fetchAPI.post('user/add-product', formData, config).then((res) => {
+            fetchAPI.post(`user/edit-product/${params.id}`, formData, config).then((res) => {
                 console.log(res)
                 if (res.response === 'success') {
-                    toast.success('Successfully added new products', {
+                    toast.success('Successfully update products', {
                         position: 'top-center',
                         theme: 'dark'
                     })
@@ -162,9 +252,9 @@ function CreateProduct() {
         <div style={{ backgroundImage: `url(${images.bannerSignUp})` }} className={cx('container')}>
             <div className={cx('form')}>
                 <form key={2} action="" onSubmit={handleSubmit(onSubmitAddProduct)}>
-                    <h1>Create Your Product</h1>
+                    <h1>Edit Your Product</h1>
                     <div className={cx('form-action')}>
-                        <label htmlFor="addproduct-name">Name</label>
+                        <label htmlFor="editproduct-name">Name</label>
                         <div className={cx('div-border')}>
                             <input
                                 onChange={onChange}
@@ -173,7 +263,7 @@ function CreateProduct() {
                                 {...register('name', {
                                     required: 'Please enter name product'
                                 })}
-                                id="addproduct-name"
+                                id="editproduct-name"
                                 type="text"
                                 placeholder="Enter  name product"
                             />
@@ -184,7 +274,7 @@ function CreateProduct() {
                         {errors.name && <small>{errors.name.message}</small>}
                     </div>
                     <div className={cx('form-action')}>
-                        <label htmlFor="addproduct-price">Price</label>
+                        <label htmlFor="editproduct-price">Price</label>
                         <div className={cx('div-border')}>
                             <input
                                 onChange={onChange}
@@ -193,7 +283,7 @@ function CreateProduct() {
                                 {...register('price', {
                                     required: 'Please enter price product'
                                 })}
-                                id="addproduct-price"
+                                id="editproduct-price"
                                 type="text"
                                 placeholder="Enter price product"
                             />
@@ -206,13 +296,13 @@ function CreateProduct() {
                     <div className={cx('form-action', 'form-action-category')}>
                         <div className={cx('div-border')}>
                             <Select
-                                defaultValue={'Select Category'}
+                                defaultValue={selectLabel.categoryLabel}
                                 style={{ width: '100%' }}
                                 options={category.map((item) => ({
                                     value: item.id,
                                     label: item.category
                                 }))}
-                                id="addproduct-country"
+                                id="editproduct-category"
                                 onChange={handleChangeSelectCategory}
                             />
                         </div>
@@ -221,13 +311,13 @@ function CreateProduct() {
                     <div className={cx('form-action', 'form-action-brand')}>
                         <div className={cx('div-border')}>
                             <Select
-                                defaultValue={'Select Brand'}
+                                defaultValue={selectLabel.brandLabel}
                                 style={{ width: '100%' }}
                                 options={brand.map((item) => ({
                                     value: item.id,
                                     label: item.brand
                                 }))}
-                                id="addproduct-brand"
+                                id="editproduct-brand"
                                 onChange={handleChangeSelectBrand}
                             />
                         </div>
@@ -236,7 +326,7 @@ function CreateProduct() {
                     <div className={cx('form-action', 'form-action-status')}>
                         <div className={cx('div-border')}>
                             <Select
-                                defaultValue={'Select Status'}
+                                defaultValue={selectLabel.statusLabel}
                                 style={{ width: '100%' }}
                                 options={[
                                     {
@@ -248,14 +338,14 @@ function CreateProduct() {
                                         label: 'Sale'
                                     }
                                 ]}
-                                id="addproduct-brand"
+                                id="editproduct-brand"
                                 onChange={handleChangeSelectStatus}
                             />
                         </div>
                         {errors.status && <small>{errors.status.message}</small>}
                     </div>
                     <div ref={saleElRef} className={cx('form-action', 'form-action-sale')}>
-                        <label htmlFor="addproduct-sale">Sale ( % )</label>
+                        <label htmlFor="editproduct-sale">Sale ( % )</label>
                         <div className={cx('div-border')}>
                             <input
                                 onChange={onChange}
@@ -267,7 +357,7 @@ function CreateProduct() {
                                         message: 'Please enter number'
                                     }
                                 })}
-                                id="addproduct-sale"
+                                id="editproduct-sale"
                                 type="text"
                                 placeholder="Enter price sale product"
                             />
@@ -278,7 +368,7 @@ function CreateProduct() {
                         {errors.sale && <small>{errors.sale.message}</small>}
                     </div>
                     <div className={cx('form-action')}>
-                        <label htmlFor="addproduct-company">Company</label>
+                        <label htmlFor="editproduct-company">Company</label>
                         <div className={cx('div-border')}>
                             <input
                                 onChange={onChange}
@@ -287,7 +377,7 @@ function CreateProduct() {
                                 {...register('company', {
                                     required: 'Please enter company profile'
                                 })}
-                                id="addproduct-company"
+                                id="editproduct-company"
                                 type="text"
                                 placeholder="Enter company"
                             />
@@ -298,17 +388,26 @@ function CreateProduct() {
                         {errors.company && <small>{errors.company.message}</small>}
                     </div>
                     <div className={cx('form-action', 'form-action-avatar')}>
-                        <label htmlFor="addproduct-image">Image </label>
+                        <label htmlFor="editproduct-image">Image </label>
                         <div className={cx('div-border')}>
-                            <input onChange={handleFile} id="addproduct-image" multiple type="file" />
+                            <input onChange={handleFile} id="editproduct-image" multiple type="file" />
                             <span>
                                 <FontAwesomeIcon className={cx('icon')} icon={faUser} />
                             </span>
                         </div>
                         {errors.image && <small>{errors.image.message}</small>}
+                        <div className={cx('image-product')}>
+                            {imgProduct.length > 0 &&
+                                imgProduct.map((img, index) => (
+                                    <div key={index}>
+                                        <img src={`http://localhost:8080/laravel/public/upload/user/product/${product.id_user}/${img}`} alt="" />
+                                        <input ref={imgInputRef} value={img} onChange={handleCheckImg} type="checkbox" />
+                                    </div>
+                                ))}
+                        </div>
                     </div>
                     <div className={cx('form-action')}>
-                        <label htmlFor="addproduct-detail">Detail</label>
+                        <label htmlFor="editproduct-detail">Detail</label>
                         <div>
                             <textarea
                                 onChange={onChange}
@@ -318,7 +417,7 @@ function CreateProduct() {
                                 {...register('detail', {
                                     required: 'Please enter detail product'
                                 })}
-                                id="addproduct-detail"
+                                id="editproduct-detail"
                                 type="text"
                                 placeholder="Enter detail product"
                             />
@@ -326,7 +425,7 @@ function CreateProduct() {
                         {errors.detail && <small>{errors.detail.message}</small>}
                     </div>
                     <button type="submit" className={cx('form-button')}>
-                        Create Product
+                        Update Product
                     </button>
                 </form>
             </div>
@@ -334,4 +433,4 @@ function CreateProduct() {
     )
 }
 
-export default CreateProduct
+export default EditProduct

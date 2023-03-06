@@ -4,12 +4,15 @@ import './index.css'
 import reportWebVitals from './reportWebVitals'
 import App from 'App'
 import { LoginProvider } from 'Context/LoginContext'
+import { CartProvider } from 'Context/CartContext'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
     <GlobalStyles>
         <LoginProvider>
-            <App />
+            <CartProvider>
+                <App />
+            </CartProvider>
         </LoginProvider>
     </GlobalStyles>
 )

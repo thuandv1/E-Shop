@@ -6,6 +6,7 @@ import BannerDefault from 'components/BannerDefault'
 import Pagination from 'components/Pagination'
 import BannerSignUp from 'components/BannerSignUp'
 import BlogItem from 'pages/components/BlogItem'
+import ListProduct from 'pages/components/ListProduct'
 
 const cx = classNames.bind(styles)
 
@@ -15,22 +16,7 @@ function Shop() {
             <BannerDefault title={'#stayhome'} desc={'Save more coupons & up to 70% off!'} image={images.bannerShop} />
             <div className={cx('product', 'div-p1')}>
                 <div className={cx('product__container')}>
-                    <ProductItem />
-                    <ProductItem />
-                    <ProductItem />
-                    <ProductItem />
-                    <ProductItem />
-                    <ProductItem />
-                    <ProductItem />
-                    <ProductItem />
-                    <ProductItem />
-                    <ProductItem />
-                    <ProductItem />
-                    <ProductItem />
-                    <ProductItem />
-                    <ProductItem />
-                    <ProductItem />
-                    <ProductItem />
+                    <ListProduct />
                 </div>
             </div>
             <Pagination />

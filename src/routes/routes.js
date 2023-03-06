@@ -13,6 +13,9 @@ import Contact from 'pages/Contact'
 import BlogDetail from 'pages/BlogDetail'
 import MyAccount from 'pages/MyAccount'
 import CreateProduct from 'pages/CreateProduct'
+import MyProduct from 'pages/MyProduct'
+import EditProduct from 'pages/EditProduct'
+import ProductDetail from 'components/ProductDetail'
 
 //Public routes
 const publicRoutes = [
@@ -55,7 +58,16 @@ const publicRoutes = [
     },
     {
         path: config.routes.myproduct,
-        component: MyAccount
+        component: MyProduct
+    },
+    ,
+    {
+        path: config.routes.editproduct,
+        component: EditProduct
+    },
+    {
+        path: config.routes.productdetail,
+        component: ProductDetail
     }
 ]
 

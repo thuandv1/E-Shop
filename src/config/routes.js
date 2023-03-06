@@ -8,7 +8,9 @@ const routes = {
     cart: '/cart',
     account: '/account',
     addproduct: '/create-product',
-    myproduct: '/my-product'
+    myproduct: '/my-product',
+    editproduct: 'my-product/edit-product/:id',
+    productdetail: '/product/detail/:id'
 }
 
 export default routes
