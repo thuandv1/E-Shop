@@ -17,3 +17,4 @@ export const post = async (path, datas = {}, config = {}) => {
 }
 
 export default api
+console.log('thuandv1')
