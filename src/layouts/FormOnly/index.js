@@ -1,5 +1,5 @@
 function FormOnly({ children }) {
-    return children
+    return children;
 }
 
-export default FormOnly
+export default FormOnly;
